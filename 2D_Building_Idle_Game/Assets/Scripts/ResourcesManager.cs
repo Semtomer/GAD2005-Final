@@ -22,8 +22,8 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private int houseGemCost;
     [SerializeField] private int castleGoldCost;
     [SerializeField] private int castleGemCost;
-    [SerializeField] private int carGoldCost;
-    [SerializeField] private int carGemCost;
+    [SerializeField] private int flagGoldCost;
+    [SerializeField] private int flagGemCost;
     [SerializeField] private int sailboatGoldCost;
     [SerializeField] private int sailboatGemCost;
     [SerializeField] private int trainGoldCost;
@@ -36,7 +36,7 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private TMP_Text pawnGoldCost_text;
     [SerializeField] private TMP_Text houseGoldCost_text;
     [SerializeField] private TMP_Text castleGoldCost_text;
-    [SerializeField] private TMP_Text carGoldCost_text;
+    [SerializeField] private TMP_Text flagGoldCost_text;
     [SerializeField] private TMP_Text sailboatGoldCost_text;
     [SerializeField] private TMP_Text trainGoldCost_text;
 
@@ -48,7 +48,7 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private TMP_Text pawnGemCost_text;
     [SerializeField] private TMP_Text houseGemCost_text;
     [SerializeField] private TMP_Text castleGemCost_text;
-    [SerializeField] private TMP_Text carGemCost_text;
+    [SerializeField] private TMP_Text flagGemCost_text;
     [SerializeField] private TMP_Text sailboatGemCost_text;
     [SerializeField] private TMP_Text trainGemCost_text;
     #endregion
@@ -59,7 +59,7 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private GameObject pawnCard;
     [SerializeField] private GameObject houseCard;
     [SerializeField] private GameObject castleCard;
-    [SerializeField] private GameObject carCard;
+    [SerializeField] private GameObject flagCard;
     [SerializeField] private GameObject sailboatCard;
     [SerializeField] private GameObject trainCard;
     #endregion
@@ -74,13 +74,13 @@ public class ResourcesManager : MonoBehaviour
 
     void Awake()
     {
-        costGoldList = new int[] { pawnGoldCost, houseGoldCost, castleGoldCost, carGoldCost, sailboatGoldCost, trainGoldCost };
-        costGoldTextsList = new TMP_Text[] { pawnGoldCost_text, houseGoldCost_text, castleGoldCost_text, carGoldCost_text, sailboatGoldCost_text, trainGoldCost_text };
+        costGoldList = new int[] { pawnGoldCost, houseGoldCost, castleGoldCost, flagGoldCost, sailboatGoldCost, trainGoldCost };
+        costGoldTextsList = new TMP_Text[] { pawnGoldCost_text, houseGoldCost_text, castleGoldCost_text, flagGoldCost_text, sailboatGoldCost_text, trainGoldCost_text };
 
-        costGemList = new int[] { pawnGemCost, houseGemCost, castleGemCost, carGemCost, sailboatGemCost, trainGemCost };
-        costGemTextsList = new TMP_Text[] { pawnGemCost_text, houseGemCost_text, castleGemCost_text, carGemCost_text, sailboatGemCost_text, trainGemCost_text };
+        costGemList = new int[] { pawnGemCost, houseGemCost, castleGemCost, flagGemCost, sailboatGemCost, trainGemCost };
+        costGemTextsList = new TMP_Text[] { pawnGemCost_text, houseGemCost_text, castleGemCost_text, flagGemCost_text, sailboatGemCost_text, trainGemCost_text };
 
-        cardList = new GameObject[] { pawnCard, houseCard, castleCard, carCard, sailboatCard, trainCard };
+        cardList = new GameObject[] { pawnCard, houseCard, castleCard, flagCard, sailboatCard, trainCard };
     }
 
     void Start()
@@ -114,7 +114,6 @@ public class ResourcesManager : MonoBehaviour
 
     IEnumerator RunRepeatedly(float waitTime)
     {
-        Debug.Log("çalýþtý");
         CheckAffordBuilding();
         yield return new WaitForSeconds(waitTime);
         StartCoroutine(RunRepeatedly(1f));
