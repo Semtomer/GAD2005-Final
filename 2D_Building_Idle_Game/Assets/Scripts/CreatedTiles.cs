@@ -3,22 +3,20 @@ using UnityEngine;
 
 public class CreatedTiles : MonoBehaviour
 {
-    public static bool isInArea = false;
+    public static bool isInArea;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "DraggablePiece")
+        if (other.gameObject.tag == "DraggablePiece")
         {
-            Debug.Log("içeride");
             isInArea = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "DraggablePiece")
+        if (other.gameObject.tag == "DraggablePiece")
         {
-            Debug.Log("dýþarýda");
             isInArea = false;
         }
     }
