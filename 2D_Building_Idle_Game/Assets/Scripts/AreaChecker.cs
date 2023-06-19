@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class CreatedTiles : MonoBehaviour
+public class AreaChecker : MonoBehaviour
 {
     public static bool isInArea;
 
@@ -19,5 +19,10 @@ public class CreatedTiles : MonoBehaviour
         {
             isInArea = false;
         }
+    }
+
+    private void Update()
+    {
+        //Debug.Log("isInArea: " + isInArea);
     }
 }
