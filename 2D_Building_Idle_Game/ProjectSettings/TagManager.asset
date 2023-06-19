@@ -9,6 +9,10 @@ TagManager:
   - HouseTarget
   - TrainTarget
   - OtherTarget
+  - TopBorder
+  - DownBorder
+  - RightBorder
+  - LeftBorder
   layers:
   - Default
   - TransparentFX
