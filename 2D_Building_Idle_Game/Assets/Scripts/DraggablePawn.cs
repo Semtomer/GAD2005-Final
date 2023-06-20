@@ -49,7 +49,9 @@ public class DraggablePawn : MonoBehaviour
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(otherTargets, transform.position);
             transform.position = otherTargets[nearestTargetIndex].transform.position;
+           
             spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+            spriteRenderer.sortingOrder = 0;
 
             if (isDraggable)
                 ResourcesManager.PayForBuilding(0);

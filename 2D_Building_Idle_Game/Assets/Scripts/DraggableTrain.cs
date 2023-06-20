@@ -49,7 +49,9 @@ public class DraggableTrain : MonoBehaviour
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(trainTargets, transform.position);
             transform.position = trainTargets[nearestTargetIndex].transform.position;
+
             spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+            spriteRenderer.sortingOrder = 0;
 
             if (isDraggable)
                 ResourcesManager.PayForBuilding(5);

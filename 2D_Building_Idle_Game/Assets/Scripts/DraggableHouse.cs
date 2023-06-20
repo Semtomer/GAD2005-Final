@@ -49,7 +49,9 @@ public class DraggableHouse : MonoBehaviour
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(houseTargets, transform.position);
             transform.position = houseTargets[nearestTargetIndex].transform.position;
+
             spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+            spriteRenderer.sortingOrder = 0;
 
             if (isDraggable)
                 ResourcesManager.PayForBuilding(1);
