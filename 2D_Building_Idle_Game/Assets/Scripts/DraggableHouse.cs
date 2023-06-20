@@ -11,6 +11,9 @@ public class DraggableHouse : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    private bool isoccupiedArea = false;
+    private int colliderCount = 0;
+
     private void Start()
     {
         houseTargets = GameObject.FindGameObjectsWithTag("HouseTarget");
@@ -33,7 +36,7 @@ public class DraggableHouse : MonoBehaviour
         {
             transform.position = GetMouseWorldPosition() + offset;
 
-            if (AreaChecker.isInArea(transform.position.x, transform.position.y))
+            if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
                 spriteRenderer.color = new Color(0f, 1f, 0f, .5f);
             else
                 spriteRenderer.color = new Color(1f, 0f, 0f, .5f);
@@ -42,7 +45,7 @@ public class DraggableHouse : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (AreaChecker.isInArea(transform.position.x, transform.position.y))
+        if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(houseTargets, transform.position);
             transform.position = houseTargets[nearestTargetIndex].transform.position;
@@ -64,5 +67,31 @@ public class DraggableHouse : MonoBehaviour
     private Vector3 GetMouseWorldPosition()
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        for (int i = 0; i < ResourcesManager.tagList.Length; i++)
+        {
+            if (collision.gameObject.tag == ResourcesManager.tagList[i])
+            {
+                colliderCount++;
+                isoccupiedArea = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        for (int i = 0; i < ResourcesManager.tagList.Length; i++)
+        {
+            if (collision.gameObject.tag == ResourcesManager.tagList[i])
+            {
+                colliderCount--;
+
+                if (colliderCount <= 0)
+                    isoccupiedArea = false;
+            }
+        }
     }
 }

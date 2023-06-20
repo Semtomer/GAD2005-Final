@@ -4009,7 +4009,7 @@ RectTransform:
   m_Children:
   - {fileID: 1733706389}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7253,7 +7253,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006818435
 GameObject:
@@ -11283,7 +11283,7 @@ Transform:
   - {fileID: 174423772}
   - {fileID: 623232671}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1505217763
 GameObject:
@@ -12148,7 +12148,7 @@ Transform:
   - {fileID: 138956939}
   - {fileID: 1333464601}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613242950
 GameObject:
@@ -15715,8 +15715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2806fc1d11ae4df4ca5bef08069bc466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownedGold: 0
-  ownedGem: 0
   ownedGold_text: {fileID: 884240796}
   ownedGem_text: {fileID: 1260988975}
   pawnGoldCost: 0
@@ -16386,7 +16384,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!1 &2126810002
 GameObject:

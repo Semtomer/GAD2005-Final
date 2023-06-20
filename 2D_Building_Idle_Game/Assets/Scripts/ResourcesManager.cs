@@ -85,7 +85,7 @@ public class ResourcesManager : MonoBehaviour
 
     GameObject[] draggablePrefabs;
 
-    string[] tagList;
+    public static string[] tagList;
 
     public static int[] numOfProducedPrefabs;
 
