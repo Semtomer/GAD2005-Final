@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - DraggablePiece
   - Target
   - HouseTarget
   - TrainTarget
@@ -13,6 +12,12 @@ TagManager:
   - DownBorder
   - RightBorder
   - LeftBorder
+  - Pawn
+  - Castle
+  - House
+  - Train
+  - Sailboat
+  - Flag
   layers:
   - Default
   - TransparentFX

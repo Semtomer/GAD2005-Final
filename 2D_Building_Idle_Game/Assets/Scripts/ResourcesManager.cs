@@ -1,13 +1,13 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class ResourcesManager : MonoBehaviour
 {
-    [Header("Owned Resources")]
-    [SerializeField] int ownedGold;
-    [SerializeField] int ownedGem;
+    static int ownedGold = 3;
+    static int ownedGem = 3;
 
     [Header("Owned Resources Text")]
     [SerializeField] TMP_Text ownedGold_text;
@@ -64,13 +64,30 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private GameObject trainCard;
     #endregion
 
-    int[] costGoldList;
+    //Draggable Prefabs
+    #region
+    [Header("Prefabs")]
+    [SerializeField] private GameObject pawnPrefab;
+    [SerializeField] private GameObject housePrefab;
+    [SerializeField] private GameObject castlePrefab;
+    [SerializeField] private GameObject flagPrefab;
+    [SerializeField] private GameObject sailboatPrefab;
+    [SerializeField] private GameObject trainPrefab;
+    #endregion
+
+    static int[] costGoldList;
     TMP_Text[] costGoldTextsList;
 
-    int[] costGemList;
+    static int[] costGemList;
     TMP_Text[] costGemTextsList;
 
     GameObject[] cardList;
+
+    GameObject[] draggablePrefabs;
+
+    string[] tagList;
+
+    public static int[] numOfProducedPrefabs;
 
     void Awake()
     {
@@ -81,6 +98,11 @@ public class ResourcesManager : MonoBehaviour
         costGemTextsList = new TMP_Text[] { pawnGemCost_text, houseGemCost_text, castleGemCost_text, flagGemCost_text, sailboatGemCost_text, trainGemCost_text };
 
         cardList = new GameObject[] { pawnCard, houseCard, castleCard, flagCard, sailboatCard, trainCard };
+
+        draggablePrefabs = new GameObject[] { pawnPrefab, housePrefab, castlePrefab, flagPrefab, sailboatPrefab, trainPrefab };
+        numOfProducedPrefabs = new int[] {0, 0, 0, 0, 0, 0};
+
+        tagList = new string[] { "Pawn", "House", "Castle", "Flag", "Sailboat", "Train" };
     }
 
     void Start()
@@ -95,7 +117,7 @@ public class ResourcesManager : MonoBehaviour
             costGemTextsList[i].SetText(costGemList[i].ToString());
         }
 
-        StartCoroutine(RunRepeatedly(1f));
+        StartCoroutine(RunRepeatedly(0.1f));
     }
 
     void CheckAffordBuilding() 
@@ -106,9 +128,40 @@ public class ResourcesManager : MonoBehaviour
         for (int i = 0; i < cardList.Length; i++)
         {
             if ( ownedGold >= costGoldList[i] && ownedGem >= costGemList[i] )
-               cardList[i].SetActive(false);
-            else 
-               cardList[i].SetActive(true);
+            {
+                cardList[i].SetActive(false);
+
+                if (numOfProducedPrefabs[i]<1)
+                {
+                    Instantiate(draggablePrefabs[i]);
+                    numOfProducedPrefabs[i]++;
+                }             
+            }
+            else
+            {
+                cardList[i].SetActive(true);
+
+                GameObject[] destroyableObjects = GameObject.FindGameObjectsWithTag(tagList[i]);
+                List<Vector3> destroyableObjectsPositions = new List<Vector3>();
+
+                foreach (GameObject go in destroyableObjects)
+                {
+                    destroyableObjectsPositions.Add(go.transform.position);
+                }
+
+                if (numOfProducedPrefabs[i] > 0)
+                {
+                    for (int j = 0; j < destroyableObjects.Length; j++)
+                    {
+                        if (!AreaChecker.isInArea(destroyableObjectsPositions[j].x, destroyableObjectsPositions[j].y))
+                        {
+                            Destroy(destroyableObjects[j]);
+                        }  
+                    }
+
+                    numOfProducedPrefabs[i]--;
+                }               
+            }    
         }
     }
 
@@ -117,5 +170,21 @@ public class ResourcesManager : MonoBehaviour
         CheckAffordBuilding();
         yield return new WaitForSeconds(waitTime);
         StartCoroutine(RunRepeatedly(1f));
+    }
+
+    public static void PayForBuilding(int indexOfBuilding)
+    {
+        ownedGold -= costGoldList[indexOfBuilding];
+        ownedGem -= costGemList[indexOfBuilding];
+    }
+
+    private void Update()
+    {
+        //Cheat Code
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ownedGold += 3;
+            ownedGem += 3;
+        }
     }
 }

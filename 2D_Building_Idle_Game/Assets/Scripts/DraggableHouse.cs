@@ -9,20 +9,19 @@ public class DraggableHouse : MonoBehaviour
 
     private GameObject[] houseTargets;
 
+    private SpriteRenderer spriteRenderer;
+
     private void Start()
     {
         houseTargets = GameObject.FindGameObjectsWithTag("HouseTarget");
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnMouseDown()
     {
         if (isDraggable)
         {
-            transform.GetChild(0).gameObject.SetActive(true);
-
-            Vector3 oldPosition = transform.position;
-            gameObject.transform.SetParent(null);
-            transform.position = oldPosition;
+            GetComponent<SpriteRenderer>().enabled = true;
 
             offset = gameObject.transform.position - GetMouseWorldPosition();
         }
@@ -35,26 +34,31 @@ public class DraggableHouse : MonoBehaviour
             transform.position = GetMouseWorldPosition() + offset;
 
             if (AreaChecker.isInArea(transform.position.x, transform.position.y))
-                GetComponentInChildren<SpriteRenderer>().color = new Color(0f, 1f, 0f, .5f);
+                spriteRenderer.color = new Color(0f, 1f, 0f, .5f);
             else
-                GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0f, 0f, .5f);
+                spriteRenderer.color = new Color(1f, 0f, 0f, .5f);
         }
     }
 
     private void OnMouseUp()
     {
-        isDraggable = false;
-
         if (AreaChecker.isInArea(transform.position.x, transform.position.y))
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(houseTargets, transform.position);
             transform.position = houseTargets[nearestTargetIndex].transform.position;
-            GetComponentInChildren<SpriteRenderer>().color = new Color(0f, 0f, 1f, 1f);
+            spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
+
+            if (isDraggable)
+                ResourcesManager.PayForBuilding(1);
         }
         else
         {
             Destroy(gameObject);
         }
+
+        isDraggable = false;
+
+        ResourcesManager.numOfProducedPrefabs[1] = 0;
     }
 
     private Vector3 GetMouseWorldPosition()
