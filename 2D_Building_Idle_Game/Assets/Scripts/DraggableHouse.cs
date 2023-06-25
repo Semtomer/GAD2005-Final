@@ -48,13 +48,16 @@ public class DraggableHouse : MonoBehaviour
         if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
         {
             int nearestTargetIndex = NearestTarget.FindTheNearesTarget(houseTargets, transform.position);
-            transform.position = houseTargets[nearestTargetIndex].transform.position;
+            GameObject nearestTarget = houseTargets[nearestTargetIndex];
+            transform.position = nearestTarget.transform.position;
 
             spriteRenderer.color = new Color(0f, 0f, 1f, 1f);
             spriteRenderer.sortingOrder = 0;
 
             if (isDraggable)
                 ResourcesManager.PayForBuilding(1);
+
+            StartCoroutine(ResourcesManager.GenerateResources(gameObject, nearestTarget));
         }
         else
         {

@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ResourcesManager : MonoBehaviour
 {
-    static int ownedGold = 3;
-    static int ownedGem = 3;
+    static int ownedGold = 10;
+    static int ownedGem = 10;
 
     [Header("Owned Resources Text")]
     [SerializeField] TMP_Text ownedGold_text;
@@ -53,6 +53,72 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private TMP_Text trainGemCost_text;
     #endregion
 
+    //Production Times of Buildings --> Normal version
+    #region
+    [Header("Production Times of Buildings")]
+    [SerializeField] private int pawnProductionTime;
+    [SerializeField] private int houseProductionTime;
+    [SerializeField] private int castleProductionTime;
+    [SerializeField] private int flagProductionTime;
+    [SerializeField] private int sailboatProductionTime;
+    [SerializeField] private int trainProductionTime;
+    #endregion
+
+    //Production Times of Buildings --> Static version
+    #region
+    [Header("Production Times of Buildings")]
+    [SerializeField] private static int pawnProductionTimeStatic;
+    [SerializeField] private static int houseProductionTimeStatic;
+    [SerializeField] private static int castleProductionTimeStatic;
+    [SerializeField] private static int flagProductionTimeStatic;
+    [SerializeField] private static int sailboatProductionTimeStatic;
+    [SerializeField] private static int trainProductionTimeStatic;
+    #endregion
+
+    //Gold Production Amounts of Buildings every Second --> Normal version
+    #region
+    [Header("Gold Production Amounts of Buildings every second")]
+    [SerializeField] private int pawnGoldProductionAmount;
+    [SerializeField] private int houseGoldProductionAmount;
+    [SerializeField] private int castleGoldProductionAmount;
+    [SerializeField] private int flagGoldProductionAmount;
+    [SerializeField] private int sailboatGoldProductionAmount;
+    [SerializeField] private int trainGoldProductionAmount;
+    #endregion
+
+    //Gold Production Amounts of Buildings every Second --> Static version
+    #region
+    [Header("Gold Production Amounts of Buildings every second")]
+    [SerializeField] private static int pawnGoldProductionAmountStatic;
+    [SerializeField] private static int houseGoldProductionAmountStatic;
+    [SerializeField] private static int castleGoldProductionAmountStatic;
+    [SerializeField] private static int flagGoldProductionAmountStatic;
+    [SerializeField] private static int sailboatGoldProductionAmountStatic;
+    [SerializeField] private static int trainGoldProductionAmountStatic;
+    #endregion
+
+    //Gem Production Amounts of Buildings every Second --> Normal version
+    #region
+    [Header("Gem Production Amounts of Buildings every second")]
+    [SerializeField] private int pawnGemProductionAmount;
+    [SerializeField] private int houseGemProductionAmount;
+    [SerializeField] private int castleGemProductionAmount;
+    [SerializeField] private int flagGemProductionAmount;
+    [SerializeField] private int sailboatGemProductionAmount;
+    [SerializeField] private int trainGemProductionAmount;
+    #endregion
+
+    //Gem Production Amounts of Buildings every Second --> Static version
+    #region
+    [Header("Gem Production Amounts of Buildings every second")]
+    [SerializeField] private static int pawnGemProductionAmountStatic;
+    [SerializeField] private static int houseGemProductionAmountStatic;
+    [SerializeField] private static int castleGemProductionAmountStatic;
+    [SerializeField] private static int flagGemProductionAmountStatic;
+    [SerializeField] private static int sailboatGemProductionAmountStatic;
+    [SerializeField] private static int trainGemProductionAmountStatic;
+    #endregion
+
     //Transparency Variables for Cards
     #region
     [Header("Cards")]
@@ -96,6 +162,30 @@ public class ResourcesManager : MonoBehaviour
 
         costGemList = new int[] { pawnGemCost, houseGemCost, castleGemCost, flagGemCost, sailboatGemCost, trainGemCost };
         costGemTextsList = new TMP_Text[] { pawnGemCost_text, houseGemCost_text, castleGemCost_text, flagGemCost_text, sailboatGemCost_text, trainGemCost_text };
+
+        pawnProductionTimeStatic = pawnProductionTime;
+        pawnGoldProductionAmountStatic = pawnGoldProductionAmount;
+        pawnGemProductionAmountStatic = pawnGemProductionAmount;
+
+        houseProductionTimeStatic = houseProductionTime;
+        houseGoldProductionAmountStatic = houseGoldProductionAmount;
+        houseGemProductionAmountStatic = houseGemProductionAmount;
+
+        castleProductionTimeStatic = castleProductionTime;
+        castleGoldProductionAmountStatic = castleGoldProductionAmount;
+        castleGemProductionAmountStatic = castleGemProductionAmount;
+
+        flagProductionTimeStatic = flagProductionTime;
+        flagGoldProductionAmountStatic = flagGoldProductionAmount;
+        flagGemProductionAmountStatic = flagGemProductionAmount;
+
+        sailboatProductionTimeStatic = sailboatProductionTime;
+        sailboatGoldProductionAmountStatic = sailboatGoldProductionAmount;
+        sailboatGemProductionAmountStatic = sailboatGemProductionAmount;
+
+        trainProductionTimeStatic = trainProductionTime;
+        trainGoldProductionAmountStatic = trainGoldProductionAmount;
+        trainGemProductionAmountStatic = trainGemProductionAmount;
 
         cardList = new GameObject[] { pawnCard, houseCard, castleCard, flagCard, sailboatCard, trainCard };
 
@@ -169,7 +259,7 @@ public class ResourcesManager : MonoBehaviour
     {
         CheckAffordBuilding();
         yield return new WaitForSeconds(waitTime);
-        StartCoroutine(RunRepeatedly(1f));
+        StartCoroutine(RunRepeatedly(0.1f));
     }
 
     public static void PayForBuilding(int indexOfBuilding)
@@ -186,5 +276,70 @@ public class ResourcesManager : MonoBehaviour
             ownedGold += 3;
             ownedGem += 3;
         }
+    }
+
+    public static IEnumerator GenerateResources(GameObject building, GameObject nearestTarget)
+    {
+        int productionTime = 0;
+        int goldToBeProducedEverySecond = 0;
+        int gemToBeProducedEverySecond = 0;
+
+        switch (building.tag)
+        {
+            case "Pawn":
+                productionTime = pawnProductionTimeStatic;
+                goldToBeProducedEverySecond = pawnGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = pawnGemProductionAmountStatic;
+                break;
+            case "House":
+                productionTime = houseProductionTimeStatic;
+                goldToBeProducedEverySecond = houseGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = houseGemProductionAmountStatic;
+                break;
+            case "Castle":
+                productionTime = castleProductionTimeStatic;
+                goldToBeProducedEverySecond = castleGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = castleGemProductionAmountStatic;
+                break;
+            case "Flag":
+                productionTime = flagProductionTimeStatic;
+                goldToBeProducedEverySecond = flagGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = flagGemProductionAmountStatic;
+                break;
+            case "Sailboat":
+                productionTime = sailboatProductionTimeStatic;
+                goldToBeProducedEverySecond = sailboatGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = sailboatGemProductionAmountStatic;
+                break;
+            case "Train":
+                productionTime = trainProductionTimeStatic;
+                goldToBeProducedEverySecond = trainGoldProductionAmountStatic;
+                gemToBeProducedEverySecond = trainGemProductionAmountStatic;
+                break;
+        }
+
+        int decreasingTime = productionTime;
+
+        RectTransform growingImage = nearestTarget.transform.GetChild(0).GetComponent<RectTransform>();
+
+        float scaleFactor = 0;
+
+        do 
+        {
+            yield return new WaitForSeconds(1);
+            decreasingTime -= 1;
+
+            scaleFactor += 1f / productionTime;
+            growingImage.localScale = new Vector3(1, scaleFactor, 1);
+
+            ownedGold += goldToBeProducedEverySecond;
+            ownedGem += gemToBeProducedEverySecond;
+        } 
+        while (decreasingTime != 0);
+
+        yield return new WaitForSeconds(1);
+
+        growingImage.localScale = new Vector3(1, 0, 1);
+        Destroy(building);
     }
 }
