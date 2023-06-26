@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ResourcesManager : MonoBehaviour
 {
-    static int ownedGold = 10;
-    static int ownedGem = 10;
+    [HideInInspector] public static int ownedGold = 10;
+    [HideInInspector] public static int ownedGem = 10;
 
     [Header("Owned Resources Text")]
     [SerializeField] TMP_Text ownedGold_text;
@@ -155,6 +155,8 @@ public class ResourcesManager : MonoBehaviour
 
     public static int[] numOfProducedPrefabs;
 
+    static bool isFinished;
+
     void Awake()
     {
         costGoldList = new int[] { pawnGoldCost, houseGoldCost, castleGoldCost, flagGoldCost, sailboatGoldCost, trainGoldCost };
@@ -196,7 +198,9 @@ public class ResourcesManager : MonoBehaviour
     }
 
     void Start()
-    {       
+    {
+        JsonManager.JsonLoad(draggablePrefabs);
+
         for (int i = 0; i < costGoldTextsList.Length; i++) 
         {
             costGoldTextsList[i].SetText(costGoldList[i].ToString());
@@ -276,10 +280,16 @@ public class ResourcesManager : MonoBehaviour
             ownedGold += 3;
             ownedGem += 3;
         }
+
+        if (isFinished)
+        {
+            JsonManager.JsonSave(ownedGold, ownedGem);
+        }
     }
 
     public static IEnumerator GenerateResources(GameObject building, GameObject nearestTarget)
     {
+        isFinished = false;
         int productionTime = 0;
         int goldToBeProducedEverySecond = 0;
         int gemToBeProducedEverySecond = 0;
@@ -334,12 +344,15 @@ public class ResourcesManager : MonoBehaviour
 
             ownedGold += goldToBeProducedEverySecond;
             ownedGem += gemToBeProducedEverySecond;
+
+            JsonManager.JsonSave(ownedGold, ownedGem);
         } 
         while (decreasingTime != 0);
 
         yield return new WaitForSeconds(1);
-
         growingImage.localScale = new Vector3(1, 0, 1);
         Destroy(building);
+
+        isFinished = true;
     }
 }
