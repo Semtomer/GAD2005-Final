@@ -8,9 +8,13 @@ public class TileView : MonoBehaviour
     [SerializeField] private Color baseColor;
     [SerializeField] private Color offsetColor;
 
-    public void Initialize(bool isOffset)
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    public void Initialize(bool isOffset)
+    {
         spriteRenderer.color = isOffset ? baseColor : offsetColor;
     }
 }
