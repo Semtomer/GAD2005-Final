@@ -1,6 +1,8 @@
 
+using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JsonManager : MonoBehaviour
 {
@@ -40,7 +42,7 @@ public class JsonManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Save file is not found in " + Application.dataPath + "/Saves/");
+            //Do Nothing
         }
     }
 
@@ -92,5 +94,25 @@ public class JsonManager : MonoBehaviour
         }
 
         isNeedToRun = true;
+    }
+
+    public void Restart()
+    {
+        string path = Application.dataPath + "/Saves/GameState.json";
+
+        try
+        {
+            if (File.Exists(path))
+                File.Delete(path);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred while deleting the JSON file: " + ex.Message);
+        }
+
+        ResourcesManager.ownedGold = 10;
+        ResourcesManager.ownedGem = 10;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
