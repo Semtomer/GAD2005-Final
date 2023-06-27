@@ -274,12 +274,16 @@ public class ResourcesManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UnityEditor.EditorApplication.isPlaying = false;
+
         //Cheat Code
         if (Input.GetKeyDown(KeyCode.P))
         {
             ownedGold += 3;
             ownedGem += 3;
         }
+
 
         if (isFinished)
         {

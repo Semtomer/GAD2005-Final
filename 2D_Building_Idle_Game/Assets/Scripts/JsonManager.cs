@@ -16,20 +16,25 @@ public class JsonManager : MonoBehaviour
         new GameObject[50]
     };
 
+    static string path;
+
     public static bool isNeedToRun = false;
+
+    private void Awake()
+    {
+        path = Application.dataPath + "/Saves/GameState.json";
+    }
 
     public static void JsonSave(int ownedGold, int ownedGem, GameObject[] draggablePrefabs)
     {
         BuildingData[] constructedBuildings = FindConstructedBuildingsData(draggablePrefabs);
         GameState gameState = new GameState(ownedGold, ownedGem, constructedBuildings);
         string jsonString = JsonUtility.ToJson(gameState);
-        File.WriteAllText(Application.dataPath + "/Saves/GameState.json", jsonString);
+        File.WriteAllText(path, jsonString);
     }
 
     public static void JsonLoad(GameObject[] draggablePrefabs)
     {
-        string path = Application.dataPath + "/Saves/GameState.json";
-
         if (File.Exists(path))
         {
             string jsonReadValue = File.ReadAllText(path);
@@ -98,8 +103,6 @@ public class JsonManager : MonoBehaviour
 
     public void Restart()
     {
-        string path = Application.dataPath + "/Saves/GameState.json";
-
         try
         {
             if (File.Exists(path))
