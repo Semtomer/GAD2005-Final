@@ -7,7 +7,7 @@ public class DraggableHouse : MonoBehaviour
 
     private bool isDraggable = true;
 
-    private GameObject[] houseTargets;
+    public static GameObject[] houseTargets;
 
     private SpriteRenderer spriteRenderer;
 
@@ -47,7 +47,7 @@ public class DraggableHouse : MonoBehaviour
     {
         if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
         {
-            int nearestTargetIndex = NearestTarget.FindTheNearesTarget(houseTargets, transform.position);
+            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(houseTargets, transform.position);
             GameObject nearestTarget = houseTargets[nearestTargetIndex];
             transform.position = nearestTarget.transform.position;
 

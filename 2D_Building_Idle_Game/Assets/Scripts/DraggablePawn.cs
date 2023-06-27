@@ -7,7 +7,7 @@ public class DraggablePawn : MonoBehaviour
 
     private bool isDraggable = true;
 
-    private GameObject[] otherTargets;
+    public static GameObject[] otherTargets;
 
     private SpriteRenderer spriteRenderer;
 
@@ -47,7 +47,7 @@ public class DraggablePawn : MonoBehaviour
     {
         if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
         {
-            int nearestTargetIndex = NearestTarget.FindTheNearesTarget(otherTargets, transform.position);
+            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(otherTargets, transform.position);
             GameObject nearestTarget = otherTargets[nearestTargetIndex];
             transform.position = nearestTarget.transform.position;
            

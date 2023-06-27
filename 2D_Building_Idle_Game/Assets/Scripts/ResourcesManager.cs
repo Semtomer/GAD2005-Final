@@ -149,7 +149,7 @@ public class ResourcesManager : MonoBehaviour
 
     GameObject[] cardList;
 
-    GameObject[] draggablePrefabs;
+    public static GameObject[] draggablePrefabs;
 
     public static string[] tagList;
 
@@ -283,7 +283,43 @@ public class ResourcesManager : MonoBehaviour
 
         if (isFinished)
         {
-            JsonManager.JsonSave(ownedGold, ownedGem);
+            JsonManager.JsonSave(ownedGold, ownedGem, draggablePrefabs);
+        }
+
+        if (JsonManager.isNeedToRun)
+        {
+            for (int i = 0; i < JsonManager.reconstructedObjects.Length; i++)
+            {
+                for (int j = 0; j < JsonManager.reconstructedObjects[i].Length; j++)
+                {
+                    if (JsonManager.reconstructedObjects[i] != null && JsonManager.reconstructedObjects[i][j] != null)
+                    {
+                        if (JsonManager.reconstructedObjects[i][j].tag == "House")
+                        {
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableHouse.houseTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggableHouse.houseTargets[nearestTargetIndex];
+                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                        }
+                        else if (JsonManager.reconstructedObjects[i][j].tag == "Train")
+                        {
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableTrain.trainTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggableTrain.trainTargets[nearestTargetIndex];
+                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                        }
+                        else if ((JsonManager.reconstructedObjects[i][j].tag == "Pawn" ||
+                                 JsonManager.reconstructedObjects[i][j].tag == "Castle" ||
+                                 JsonManager.reconstructedObjects[i][j].tag == "Flag" ||
+                                 JsonManager.reconstructedObjects[i][j].tag == "Sailboat"))
+                        {
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggablePawn.otherTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggablePawn.otherTargets[nearestTargetIndex];
+                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                        }
+                    }   
+                }
+            }
+            
+            JsonManager.isNeedToRun = false;
         }
     }
 
@@ -345,7 +381,7 @@ public class ResourcesManager : MonoBehaviour
             ownedGold += goldToBeProducedEverySecond;
             ownedGem += gemToBeProducedEverySecond;
 
-            JsonManager.JsonSave(ownedGold, ownedGem);
+            JsonManager.JsonSave(ownedGold, ownedGem, draggablePrefabs);
         } 
         while (decreasingTime != 0);
 

@@ -7,7 +7,7 @@ public class DraggableTrain : MonoBehaviour
 
     private bool isDraggable = true;
 
-    private GameObject[] trainTargets;
+    public static GameObject[] trainTargets;
 
     private SpriteRenderer spriteRenderer;
 
@@ -47,7 +47,7 @@ public class DraggableTrain : MonoBehaviour
     {
         if (AreaChecker.isInArea(transform.position.x, transform.position.y) && !isoccupiedArea)
         {
-            int nearestTargetIndex = NearestTarget.FindTheNearesTarget(trainTargets, transform.position);
+            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(trainTargets, transform.position);
             GameObject nearestTarget = trainTargets[nearestTargetIndex];
             transform.position = nearestTarget.transform.position;
 

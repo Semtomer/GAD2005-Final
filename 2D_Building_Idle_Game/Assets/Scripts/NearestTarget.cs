@@ -7,7 +7,7 @@ public class NearestTarget
 {
     private static List<float> Distances = new List<float>();
 
-    public static int FindTheNearesTarget(GameObject[] targetList, Vector3 transformPosition)
+    public static int FindTheNearestTarget(GameObject[] targetList, Vector3 transformPosition)
     {
         Distances.Clear();
 

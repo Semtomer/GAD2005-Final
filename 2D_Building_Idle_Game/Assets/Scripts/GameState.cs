@@ -1,22 +1,19 @@
 ﻿
-
+[System.Serializable]
 public class GameState
 {
     public int ownedGold;
     public int ownedGem;
-    public int[] countOfConsturectedBuildings;
-    public float[][][] positionsOfConstructedBuilding;
-    
+    public BuildingData[] constructedBuildings;
+
     public GameState()
     {
-
     }
 
-    public GameState(int ownedGold, int ownedGem, int[] countOfConsturectedBuildings, float[][][] positionsOfConstructedBuilding) 
+    public GameState(int ownedGold, int ownedGem, BuildingData[] constructedBuildings)
     {
         this.ownedGold = ownedGold;
         this.ownedGem = ownedGem;
-        this.countOfConsturectedBuildings = countOfConsturectedBuildings;
-        this.positionsOfConstructedBuilding = positionsOfConstructedBuilding;
+        this.constructedBuildings = constructedBuildings;
     }
 }
