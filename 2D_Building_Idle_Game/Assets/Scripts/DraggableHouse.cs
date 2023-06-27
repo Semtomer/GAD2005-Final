@@ -14,9 +14,13 @@ public class DraggableHouse : MonoBehaviour
     private bool isoccupiedArea = false;
     private int colliderCount = 0;
 
-    private void Start()
+    private void Awake()
     {
         houseTargets = GameObject.FindGameObjectsWithTag("HouseTarget");
+    }
+
+    private void Start()
+    {  
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

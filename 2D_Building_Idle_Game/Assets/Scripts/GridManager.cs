@@ -4,7 +4,7 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private int width, height;
-    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private TileView tilePrefab;
     [SerializeField] private Transform createdTiles;
 
     private void Start()
@@ -18,11 +18,11 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                Tile spawnedTile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, createdTiles.transform);
+                TileView spawnedTile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, createdTiles.transform);
                 spawnedTile.name = $"Tile {x} {y}";
 
                 bool isOffset = (x + y) % 2 == 1;
-                spawnedTile.Init(isOffset);
+                spawnedTile.Initialize(isOffset);
             }
         }
     }

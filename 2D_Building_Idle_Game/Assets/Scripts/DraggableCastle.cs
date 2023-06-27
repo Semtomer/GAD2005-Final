@@ -14,9 +14,13 @@ public class DraggableCastle : MonoBehaviour
     private bool isoccupiedArea = false;
     private int colliderCount = 0;
 
-    private void Start()
+    private void Awake()
     {
         otherTargets = GameObject.FindGameObjectsWithTag("OtherTarget");
+    }
+
+    private void Start()
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

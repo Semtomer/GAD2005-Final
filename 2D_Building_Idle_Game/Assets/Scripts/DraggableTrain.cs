@@ -14,9 +14,13 @@ public class DraggableTrain : MonoBehaviour
     private bool isoccupiedArea = false;
     private int colliderCount = 0;
 
-    private void Start()
+    private void Awake()
     {
         trainTargets = GameObject.FindGameObjectsWithTag("TrainTarget");
+    }
+
+    private void Start()
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

@@ -1,12 +1,14 @@
 
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class TileView : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    [SerializeField] private Color baseColor, offsetColor;
 
-    public void Init(bool isOffset)
+    [SerializeField] private Color baseColor;
+    [SerializeField] private Color offsetColor;
+
+    public void Initialize(bool isOffset)
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = isOffset ? baseColor : offsetColor;
