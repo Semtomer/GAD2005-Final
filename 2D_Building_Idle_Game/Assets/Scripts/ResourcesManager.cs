@@ -300,14 +300,14 @@ public class ResourcesManager : MonoBehaviour
                     {
                         if (JsonManager.reconstructedObjects[i][j].tag == "House")
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableHouse.houseTargets, JsonManager.reconstructedObjects[i][j].transform.position);
-                            GameObject nearestTarget = DraggableHouse.houseTargets[nearestTargetIndex];
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.houseTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggableObject.houseTargets[nearestTargetIndex];
                             StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
                         }
                         else if (JsonManager.reconstructedObjects[i][j].tag == "Train")
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableTrain.trainTargets, JsonManager.reconstructedObjects[i][j].transform.position);
-                            GameObject nearestTarget = DraggableTrain.trainTargets[nearestTargetIndex];
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.trainTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggableObject.trainTargets[nearestTargetIndex];
                             StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
                         }
                         else if ((JsonManager.reconstructedObjects[i][j].tag == "Pawn" ||
@@ -315,11 +315,11 @@ public class ResourcesManager : MonoBehaviour
                                  JsonManager.reconstructedObjects[i][j].tag == "Flag" ||
                                  JsonManager.reconstructedObjects[i][j].tag == "Sailboat"))
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggablePawn.otherTargets, JsonManager.reconstructedObjects[i][j].transform.position);
-                            GameObject nearestTarget = DraggablePawn.otherTargets[nearestTargetIndex];
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.otherTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            GameObject nearestTarget = DraggableObject.otherTargets[nearestTargetIndex];
                             StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
                         }
-                    }   
+                    }
                 }
             }
             
