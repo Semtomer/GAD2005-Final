@@ -1,10 +1,10 @@
 
 using System;
-using System.IO;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine;
+using System.IO;
 
-public class JsonManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public static GameObject[][] reconstructedObjects = new GameObject[6][]
     {
@@ -16,30 +16,28 @@ public class JsonManager : MonoBehaviour
         new GameObject[50]
     };
 
-    static string path;
-
     public static bool isNeedToRun = false;
+
+    private static IDataManager dataManager;
 
     private void Awake()
     {
-        path = Application.dataPath + "/Saves/GameState.json";
+        string path = Application.dataPath + "/Saves/GameState.json";
+        dataManager = new JsonDataManager(path);
     }
 
-    public static void JsonSave(int ownedGold, int ownedGem, GameObject[] draggablePrefabs)
+    public static void SaveGameState(int ownedGold, int ownedGem, GameObject[] draggablePrefabs)
     {
         BuildingData[] constructedBuildings = FindConstructedBuildingsData(draggablePrefabs);
         GameState gameState = new GameState(ownedGold, ownedGem, constructedBuildings);
-        string jsonString = JsonUtility.ToJson(gameState);
-        File.WriteAllText(path, jsonString);
+        dataManager.SaveGameState(gameState);
     }
 
-    public static void JsonLoad(GameObject[] draggablePrefabs)
+    public static void LoadGameState(GameObject[] draggablePrefabs)
     {
-        if (File.Exists(path))
+        GameState gameState = dataManager.LoadGameState();
+        if (gameState != null)
         {
-            string jsonReadValue = File.ReadAllText(path);
-            GameState gameState = JsonUtility.FromJson<GameState>(jsonReadValue);
-
             ResourcesManager.ownedGold = gameState.ownedGold;
             ResourcesManager.ownedGem = gameState.ownedGem;
 
@@ -47,11 +45,11 @@ public class JsonManager : MonoBehaviour
         }
         else
         {
-            //Do Nothing
+            // Do Nothing
         }
     }
 
-    static BuildingData[] FindConstructedBuildingsData(GameObject[] draggablePrefabs)
+    private static BuildingData[] FindConstructedBuildingsData(GameObject[] draggablePrefabs)
     {
         BuildingData[] buildingDataArray = new BuildingData[draggablePrefabs.Length];
 
@@ -80,7 +78,7 @@ public class JsonManager : MonoBehaviour
         return buildingDataArray;
     }
 
-    static void RebuildOfConstructedBuildings(BuildingData[] constructedBuildings, GameObject[] draggablePrefabs)
+    private static void RebuildOfConstructedBuildings(BuildingData[] constructedBuildings, GameObject[] draggablePrefabs)
     {
         for (int i = 0; i < constructedBuildings.Length; i++)
         {
@@ -104,6 +102,7 @@ public class JsonManager : MonoBehaviour
 
     public void Restart()
     {
+        string path = Application.dataPath + "/Saves/GameState.json";
         try
         {
             if (File.Exists(path))

@@ -199,7 +199,7 @@ public class ResourcesManager : MonoBehaviour
 
     void Start()
     {
-        JsonManager.JsonLoad(draggablePrefabs);
+        GameManager.LoadGameState(draggablePrefabs);
 
         for (int i = 0; i < costGoldTextsList.Length; i++) 
         {
@@ -287,43 +287,43 @@ public class ResourcesManager : MonoBehaviour
 
         if (isFinished)
         {
-            JsonManager.JsonSave(ownedGold, ownedGem, draggablePrefabs);
+            GameManager.SaveGameState(ownedGold, ownedGem, draggablePrefabs);
         }
 
-        if (JsonManager.isNeedToRun)
+        if (GameManager.isNeedToRun)
         {
-            for (int i = 0; i < JsonManager.reconstructedObjects.Length; i++)
+            for (int i = 0; i < GameManager.reconstructedObjects.Length; i++)
             {
-                for (int j = 0; j < JsonManager.reconstructedObjects[i].Length; j++)
+                for (int j = 0; j < GameManager.reconstructedObjects[i].Length; j++)
                 {
-                    if (JsonManager.reconstructedObjects[i] != null && JsonManager.reconstructedObjects[i][j] != null)
+                    if (GameManager.reconstructedObjects[i] != null && GameManager.reconstructedObjects[i][j] != null)
                     {
-                        if (JsonManager.reconstructedObjects[i][j].tag == "House")
+                        if (GameManager.reconstructedObjects[i][j].tag == "House")
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.houseTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.houseTargets, GameManager.reconstructedObjects[i][j].transform.position);
                             GameObject nearestTarget = DraggableObject.houseTargets[nearestTargetIndex];
-                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                            StartCoroutine(GenerateResources(GameManager.reconstructedObjects[i][j], nearestTarget));
                         }
-                        else if (JsonManager.reconstructedObjects[i][j].tag == "Train")
+                        else if (GameManager.reconstructedObjects[i][j].tag == "Train")
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.trainTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.trainTargets, GameManager.reconstructedObjects[i][j].transform.position);
                             GameObject nearestTarget = DraggableObject.trainTargets[nearestTargetIndex];
-                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                            StartCoroutine(GenerateResources(GameManager.reconstructedObjects[i][j], nearestTarget));
                         }
-                        else if ((JsonManager.reconstructedObjects[i][j].tag == "Pawn" ||
-                                 JsonManager.reconstructedObjects[i][j].tag == "Castle" ||
-                                 JsonManager.reconstructedObjects[i][j].tag == "Flag" ||
-                                 JsonManager.reconstructedObjects[i][j].tag == "Sailboat"))
+                        else if ((GameManager.reconstructedObjects[i][j].tag == "Pawn" ||
+                                 GameManager.reconstructedObjects[i][j].tag == "Castle" ||
+                                 GameManager.reconstructedObjects[i][j].tag == "Flag" ||
+                                 GameManager.reconstructedObjects[i][j].tag == "Sailboat"))
                         {
-                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.otherTargets, JsonManager.reconstructedObjects[i][j].transform.position);
+                            int nearestTargetIndex = NearestTarget.FindTheNearestTarget(DraggableObject.otherTargets, GameManager.reconstructedObjects[i][j].transform.position);
                             GameObject nearestTarget = DraggableObject.otherTargets[nearestTargetIndex];
-                            StartCoroutine(GenerateResources(JsonManager.reconstructedObjects[i][j], nearestTarget));
+                            StartCoroutine(GenerateResources(GameManager.reconstructedObjects[i][j], nearestTarget));
                         }
                     }
                 }
             }
-            
-            JsonManager.isNeedToRun = false;
+
+            GameManager.isNeedToRun = false;
         }
     }
 
@@ -385,7 +385,7 @@ public class ResourcesManager : MonoBehaviour
             ownedGold += goldToBeProducedEverySecond;
             ownedGem += gemToBeProducedEverySecond;
 
-            JsonManager.JsonSave(ownedGold, ownedGem, draggablePrefabs);
+            GameManager.SaveGameState(ownedGold, ownedGem, draggablePrefabs);
         } 
         while (decreasingTime != 0);
 
