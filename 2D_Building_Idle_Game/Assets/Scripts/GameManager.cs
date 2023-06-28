@@ -112,17 +112,19 @@ public class GameManager : MonoBehaviour
         try
         {
             if (File.Exists(path))
+            {
                 File.Delete(path);
+
+                ResourcesManager.ownedGold = 10;
+                ResourcesManager.ownedGem = 10;
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }            
         }
         catch (Exception ex)
         {
             Console.WriteLine("An error occurred while deleting the JSON file: " + ex.Message);
-        }
-
-        ResourcesManager.ownedGold = 10;
-        ResourcesManager.ownedGem = 10;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }    
     }
 
     // This function for the Sound button. The SoundOnOff method opens and closes the soundtrack that is playing background.
