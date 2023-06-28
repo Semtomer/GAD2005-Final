@@ -95,6 +95,7 @@ public class JsonManager : MonoBehaviour
                 reconstructedObjects[i][j] = Instantiate(draggablePrefabs[i], position, Quaternion.identity);
                 reconstructedObjects[i][j].GetComponent<SpriteRenderer>().enabled = true;
                 reconstructedObjects[i][j].GetComponent<SpriteRenderer>().color = Color.blue;
+                reconstructedObjects[i][j].GetComponent<DraggableObject>().isDraggable = false;
             }
         }
 

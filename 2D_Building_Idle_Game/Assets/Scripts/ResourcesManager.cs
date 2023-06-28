@@ -247,7 +247,7 @@ public class ResourcesManager : MonoBehaviour
                 {
                     for (int j = 0; j < destroyableObjects.Length; j++)
                     {
-                        if (!AreaChecker.isInArea(destroyableObjectsPositions[j].x, destroyableObjectsPositions[j].y))
+                        if (!DraggableObject.isInArea(destroyableObjectsPositions[j]))
                         {
                             Destroy(destroyableObjects[j]);
                         }  
