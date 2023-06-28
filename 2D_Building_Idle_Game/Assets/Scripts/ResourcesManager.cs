@@ -211,10 +211,12 @@ public class ResourcesManager : MonoBehaviour
             costGemTextsList[i].SetText(costGemList[i].ToString());
         }
 
-        StartCoroutine(RunRepeatedly(0.1f));
+        StartCoroutine(CheckAffordBuilding(0.1f));
     }
 
-    void CheckAffordBuilding() 
+    // It checks whether the resources available to buy building cards are sufficient.
+    // If enough, the cards will generate the building to be dragged. If not, it turns off the taken of the card.
+    IEnumerator CheckAffordBuilding(float waitTime) 
     {
         ownedGold_text.SetText(ownedGold.ToString());
         ownedGem_text.SetText(ownedGem.ToString());
@@ -257,15 +259,12 @@ public class ResourcesManager : MonoBehaviour
                 }               
             }    
         }
-    }
 
-    IEnumerator RunRepeatedly(float waitTime)
-    {
-        CheckAffordBuilding();
         yield return new WaitForSeconds(waitTime);
-        StartCoroutine(RunRepeatedly(0.1f));
+        StartCoroutine(CheckAffordBuilding(waitTime));
     }
 
+    // The cost of the purchased card is deducted from the resources owned.
     public static void PayForBuilding(int indexOfBuilding)
     {
         ownedGold -= costGoldList[indexOfBuilding];
@@ -274,22 +273,17 @@ public class ResourcesManager : MonoBehaviour
 
     private void Update()
     {
+        // Close the game with the escape key.
         if (Input.GetKeyDown(KeyCode.Escape))
             UnityEditor.EditorApplication.isPlaying = false;
 
-        //Cheat Code
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ownedGold += 3;
-            ownedGem += 3;
-        }
-
-
+        // It saves the state of the game when the resource production of the building is finished.
         if (isFinished)
         {
             GameManager.SaveGameState(ownedGold, ownedGem, draggablePrefabs);
         }
 
+        // Allows buildings placed in the previously saved game to continue where they left off.
         if (GameManager.isNeedToRun)
         {
             for (int i = 0; i < GameManager.reconstructedObjects.Length; i++)
@@ -327,6 +321,8 @@ public class ResourcesManager : MonoBehaviour
         }
     }
 
+    // It allows buildings placed in tiles to produce a specified amount of resources for a specified period of time.
+    // It also saves the state of the game when production is made every second. Destroys the building when resource production is finished.
     public static IEnumerator GenerateResources(GameObject building, GameObject nearestTarget)
     {
         isFinished = false;
