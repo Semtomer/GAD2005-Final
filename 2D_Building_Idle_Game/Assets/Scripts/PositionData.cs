@@ -1,4 +1,6 @@
 ﻿
+// This class is used to represent the position of a building. It contains three coordinate values ​​x, y, and z.
+
 [System.Serializable]
 public class PositionData
 {

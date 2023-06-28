@@ -1,4 +1,9 @@
 ﻿
+/*
+ * This class is a JSON data manager class that implements the IDataManager interface. 
+ * It uses the SaveGameState and LoadGameState methods to save and load the game state in JSON format.
+ */
+
 using System.IO;
 using UnityEngine;
 

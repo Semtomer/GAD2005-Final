@@ -1,3 +1,5 @@
+﻿
+// This class contains functions related to the main menu of the game.
 
 using System;
 using System.IO;
@@ -12,6 +14,7 @@ public class MenuManager : MonoBehaviour
 
     string path;
 
+    // Sets the color of the continue button to gray and its text to gray if the game state file which is save file does not exist.
     private void Awake()
     {
         path = Application.dataPath + "/Saves/GameState.json";
@@ -23,6 +26,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    // The StartButton method is called when the start button is clicked.
+    // If the game state file which is save file exists, it deletes the file.
+    // It then sets the initial resource values ​​and loads the game scene.
     public void StartButton()
     {
         try
@@ -41,6 +47,8 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    // The ResumeButton method is called when the resume button is clicked.
+    // Loads the game scene from where it left off if the game state file which is save file exists.
     public void ResumeButton()
     {
         if (File.Exists(path))
@@ -49,6 +57,7 @@ public class MenuManager : MonoBehaviour
         }  
     }
 
+    // The Exit Button method is called when the exit button is clicked. The game is stopped.
     public void ExitButton()
     {
         UnityEditor.EditorApplication.isPlaying = false;

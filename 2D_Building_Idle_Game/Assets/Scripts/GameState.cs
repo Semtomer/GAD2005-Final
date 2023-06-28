@@ -1,4 +1,10 @@
 ﻿
+/*
+ * This class represents the current state of the game. 
+ * The ownedGold and ownedGem attributes hold the amount of gold and gems owned by the player. 
+ * The constructedBuildings property stores the data of the constructed buildings as a BuildingData array.
+ */
+
 [System.Serializable]
 public class GameState
 {

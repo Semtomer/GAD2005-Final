@@ -1,4 +1,10 @@
 
+/*
+ * This class contains functions related to game state and saving. 
+ * The SaveGameState method is used to save the game state. 
+ * The LoadGameState method is used to load the saved game state.
+ */
+
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour
     public static void LoadGameState(GameObject[] draggablePrefabs)
     {
         GameState gameState = dataManager.LoadGameState();
+
         if (gameState != null)
         {
             ResourcesManager.ownedGold = gameState.ownedGold;
@@ -43,12 +50,9 @@ public class GameManager : MonoBehaviour
 
             RebuildOfConstructedBuildings(gameState.constructedBuildings, draggablePrefabs);
         }
-        else
-        {
-            // Do Nothing
-        }
     }
 
+    // The FindConstructedBuildingsData method is used to find the data of the constructed buildings.
     private static BuildingData[] FindConstructedBuildingsData(GameObject[] draggablePrefabs)
     {
         BuildingData[] buildingDataArray = new BuildingData[draggablePrefabs.Length];
@@ -78,6 +82,7 @@ public class GameManager : MonoBehaviour
         return buildingDataArray;
     }
 
+    // The RebuildOfConstructedBuildings method rebuilds the constructed buildings when the loading last game state.
     private static void RebuildOfConstructedBuildings(BuildingData[] constructedBuildings, GameObject[] draggablePrefabs)
     {
         for (int i = 0; i < constructedBuildings.Length; i++)
@@ -100,6 +105,7 @@ public class GameManager : MonoBehaviour
         isNeedToRun = true;
     }
 
+    // This function for the Restart button. The restart method restarts the game and resets the saved game state.
     public void Restart()
     {
         string path = Application.dataPath + "/Saves/GameState.json";
