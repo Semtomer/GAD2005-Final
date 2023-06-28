@@ -124,4 +124,13 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    // This function for the Sound button. The SoundOnOff method opens and closes the soundtrack that is playing background.
+    public void SoundOnOff()
+    {
+        if (GameObject.FindGameObjectWithTag("SoundtrackManager").GetComponent<AudioSource>().enabled)
+            GameObject.FindGameObjectWithTag("SoundtrackManager").GetComponent<AudioSource>().enabled = false;
+        else
+            GameObject.FindGameObjectWithTag("SoundtrackManager").GetComponent<AudioSource>().enabled = true;
+    }
 }

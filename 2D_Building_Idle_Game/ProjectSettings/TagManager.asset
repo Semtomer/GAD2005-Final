@@ -18,6 +18,7 @@ TagManager:
   - Train
   - Sailboat
   - Flag
+  - SoundtrackManager
   layers:
   - Default
   - TransparentFX
