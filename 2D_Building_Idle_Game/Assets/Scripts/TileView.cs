@@ -1,4 +1,10 @@
 
+/* 
+ * This class represents the display of tile. TileView provides access to the its SpriteRenderer component.
+ * The Initialize method adjusts the colors of the image based on the isOffset value. 
+ * If the isOffset value is true, the base color is used, if false, the offset color is used.
+*/
+
 using UnityEngine;
 
 public class TileView : MonoBehaviour
