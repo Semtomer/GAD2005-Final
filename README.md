@@ -1,7 +1,9 @@
 # GAD2005-Final
 This repository is the final project of the GAD2005 Game Development Practices course I took in the Digital Game Design department at Bahcesehir University. (3rd grade 2nd semester)
 
-Note: When you open the project with the unity editor, first open the scene named "MainMenu" and then set the Resolution to 1920x1280.
+Note: When you open the project with the unity editor, first open the scene named "MainMenu" and then set the Resolution to 1920x1280.    
+
+Note: When you open the build, do not set the resolution to full screen. The default resolution is 1620x1280.
 
 The details of the given project assignment are as follows:                         
 
