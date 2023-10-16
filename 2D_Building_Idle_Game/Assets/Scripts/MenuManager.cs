@@ -60,8 +60,7 @@ public class MenuManager : MonoBehaviour
     // The Exit Button method is called when the exit button is clicked. The game is stopped.
     public void ExitButton()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+
     }
 
     // This function for the Sound button. The SoundOnOff method opens and closes the soundtrack that is playing background.

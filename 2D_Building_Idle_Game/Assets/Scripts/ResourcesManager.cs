@@ -273,10 +273,6 @@ public class ResourcesManager : MonoBehaviour
 
     private void Update()
     {
-        // Close the game with the escape key.
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UnityEditor.EditorApplication.isPlaying = false;
-
         // It saves the state of the game when the resource production of the building is finished.
         if (isFinished)
         {
